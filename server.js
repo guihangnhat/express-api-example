@@ -3,6 +3,27 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+const { Pool } = require('pg');
+
+// Render automatically handles the DATABASE_URL variable once configured
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false // Required for Render's secure connection
+  }
+});
+
+// Quick connection test
+pool.connect((err, client, release) => {
+  if (err) {
+    return console.error('Error acquiring client', err.stack);
+  }
+  console.log('Successfully connected to PostgreSQL database!');
+  release();
+});
+
+module.exports = pool;
+
 // Middleware to parse incoming JSON request bodies
 app.use(express.json());
 
@@ -76,3 +97,6 @@ app.delete('/api/items/:id', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running smoothly on http://localhost:${PORT}`);
 });
+
+
+
