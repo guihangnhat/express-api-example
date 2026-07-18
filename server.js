@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
-
 const PORT = process.env.PORT || 3000;
-
+const BLOG_ID = process.env.BLOG_ID;
+const API_KEY = process.env.API_KEY;
 const { Pool } = require('pg');
+const fetch = require('node-fetch');
 
 // Render automatically handles the DATABASE_URL variable once configured
 const pool = new Pool({
@@ -92,6 +93,22 @@ app.delete('/api/items/:id', (req, res) => {
     items.splice(index, 1);
     res.status(200).json({ message: 'Item successfully deleted' });
 });
+
+// GET: Fetch blog posts from Blogger API
+app.get('/api/posts', async (req, res) => {
+    try {
+        const url = `https://googleapis.com{BLOG_ID}/posts?key=${API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        // Send JSON data to the frontend
+        res.json(data.items);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch blog posts' });
+    }
+});
+
+
 
 // Start the server
 app.listen(PORT, () => {

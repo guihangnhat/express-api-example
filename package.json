@@ -12,6 +12,15 @@
   "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1",
+    "node-fetch": "^3.3.2",
     "pg": "^8.22.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guihangnhat/express-api-example.git"
+  },
+  "bugs": {
+    "url": "https://github.com/guihangnhat/express-api-example/issues"
+  },
+  "homepage": "https://github.com/guihangnhat/express-api-example#readme"
 }
