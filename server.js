@@ -123,7 +123,25 @@ app.get('/api/posts', async (req, res) => {
     }
 });
 
-
+// Test route to check PostgreSQL connection
+app.get('/test-db', async (req, res) => {
+try {
+// This executes a simple query to get the current timestamp from Postgres
+const result = await pool.query('SELECT NOW();');
+res.json({
+success: true,
+message: "Successfully connected to PostgreSQL on Render!",
+timestamp: result.rows[0].now
+});
+} catch (err) {
+console.error("Database connection failed ❌:", err.message);
+res.status(500).json({
+success: false,
+message: "Database connection failed",
+error: err.message
+});
+}
+});
 
 // Start the server
 app.listen(PORT, () => {
