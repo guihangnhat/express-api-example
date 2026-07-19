@@ -5,18 +5,7 @@ const BLOG_ID = process.env.BLOG_ID;
 const API_KEY = process.env.API_KEY;
 const { Pool } = require('pg');
 const fetch = require('node-fetch');
-const { Client } = require('pg');
 
-const client = new Client({
-connectionString: process.env.DATABASE_URL,
-ssl: process.env.NODE_ENV === 'production'
-? { rejectUnauthorized: false }
-: false,
-});
-
-client.connect()
-.then(() => console.log("  Connected to PostgreSQL"))
-.catch(err => console.error("  Connection error:", err));
 
 
 // Render automatically handles the DATABASE_URL variable once configured
