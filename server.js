@@ -5,6 +5,7 @@ const BLOG_ID = process.env.BLOG_ID;
 const API_KEY = process.env.API_KEY;
 const { Pool } = require('pg');
 const fetch = require('node-fetch');
+const cors = require('cors'); 
 
 // Render automatically handles the DATABASE_URL variable once configured
 const pool = new Pool({
@@ -24,6 +25,8 @@ pool.connect((err, client, release) => {
 });
 
 module.exports = pool;
+
+app.use(cors()); 
 
 // Middleware to parse incoming JSON request bodies
 app.use(express.json());
